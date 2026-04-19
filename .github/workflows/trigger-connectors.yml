@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Extract dataset key from branch name
+      # =========================
+      # Extract dataset key
+      # =========================
       - name: Extract dataset key
         id: extract
         run: |
@@ -18,20 +20,30 @@ jobs:
           DATASET=$(echo $BRANCH | sed 's/auto\/spec-//')
           echo "dataset=$DATASET" >> $GITHUB_OUTPUT
 
-      # Checkout CLI repo
+      # =========================
+      # ✅ FIX: Use correct repo name
+      # =========================
       - name: Checkout CLI repo
         uses: actions/checkout@v4
         with:
-          repository: KKanistan06/YOUR-CLI-REPO
+          repository: KKanistan06/ballerina-connector-automation   # 🔥 FIX HERE
           token: ${{ secrets.GH_PAT }}
 
+      # =========================
+      # Setup Ballerina
+      # =========================
       - name: Setup Ballerina
         uses: ballerina-platform/setup-ballerina@v1
 
+      # =========================
+      # Build CLI
+      # =========================
       - name: Build CLI
         run: bal build
 
-      # Run remaining modules
+      # =========================
+      # Run pipeline
+      # =========================
       - name: Run connector pipeline
         run: |
           bal run -- connector ${{ steps.extract.outputs.dataset }}
@@ -39,11 +51,17 @@ jobs:
           bal run -- fix-code ${{ steps.extract.outputs.dataset }}
           bal run -- generate-documents generate-all ${{ steps.extract.outputs.dataset }}
 
+      # =========================
+      # Prepare output
+      # =========================
       - name: Prepare connector output
         run: |
           mkdir connector
           cp -r output/connector-generator/output/* connector/
 
+      # =========================
+      # Create PR to connector repo
+      # =========================
       - name: Create PR to connector repo
         uses: peter-evans/create-pull-request@v6
         with:
