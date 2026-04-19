@@ -28,7 +28,16 @@ jobs:
         with:
           repository: KKanistan06/ballerina-connector-automation
           token: ${{ secrets.GH_PAT }}
-          fetch-depth: 0
+
+      # =========================
+      # Checkout spec repo (IMPORTANT)
+      # =========================
+      - name: Checkout spec repo
+        uses: actions/checkout@v4
+        with:
+          repository: KKanistan06/generated-ballerina-spec
+          token: ${{ secrets.GH_PAT }}
+          path: spec-repo
 
       # =========================
       # Setup Java 21
@@ -40,18 +49,18 @@ jobs:
           java-version: 21
 
       # =========================
-      # Install Ballerina 2201.13.1 (STRICT)
+      # Install Ballerina
       # =========================
       - name: Install Ballerina
         run: |
           curl -L https://dist.ballerina.io/downloads/2201.13.1/ballerina-2201.13.1-swan-lake-linux-x64.deb -o ballerina.deb
           sudo dpkg -i ballerina.deb
 
-      - name: Verify Ballerina version
+      - name: Verify Ballerina
         run: bal version
 
       # =========================
-      # Build native Java module
+      # Build native module
       # =========================
       - name: Build native Java module
         run: |
@@ -61,34 +70,61 @@ jobs:
           cd ../../..
 
       # =========================
-      # Clean + Build CLI
+      # 🔥 COPY REQUIRED FILES INTO CLI EXPECTED PATHS
+      # =========================
+      - name: Prepare dataset files
+        run: |
+          DATASET=${{ steps.extract.outputs.dataset }}
+
+          echo "📦 Preparing dataset: $DATASET"
+
+          META_PATH="spec-repo/datasets/$DATASET/metadata.json"
+          IR_PATH="spec-repo/datasets/$DATASET/ir.json"
+
+          if [ ! -f "$META_PATH" ]; then
+            echo "❌ metadata.json missing!"
+            exit 1
+          fi
+
+          if [ ! -f "$IR_PATH" ]; then
+            echo "❌ ir.json missing!"
+            exit 1
+          fi
+
+          # Create expected directories
+          mkdir -p modules/sdkanalyzer/output
+          mkdir -p modules/api_specification_generator/output
+
+          # Copy files into expected CLI locations
+          cp "$META_PATH" modules/sdkanalyzer/output/${DATASET}-metadata.json
+          cp "$IR_PATH" modules/api_specification_generator/output/${DATASET}-ir.json
+
+      # =========================
+      # Clean + Build
       # =========================
       - name: Clean project
         run: bal clean
 
-      - name: Build CLI
+      - name: Build project
         run: bal build
 
       # =========================
-      # Run full pipeline
+      # Run pipeline
       # =========================
       - name: Run connector pipeline
         run: |
-          bal run -- connector ${{ steps.extract.outputs.dataset }}
-          bal run -- generate-tests ${{ steps.extract.outputs.dataset }}
-          bal run -- fix-code ${{ steps.extract.outputs.dataset }}
-          bal run -- generate-documents generate-all ${{ steps.extract.outputs.dataset }}
+          DATASET=${{ steps.extract.outputs.dataset }}
+
+          bal run -- connector $DATASET
+          bal run -- generate-tests $DATASET
+          bal run -- fix-code $DATASET
+          bal run -- generate-documents generate-all $DATASET
 
       # =========================
-      # Prepare connector output
+      # Prepare output
       # =========================
       - name: Prepare connector output
         run: |
-          if [ ! -d output/connector-generator/output ]; then
-            echo "❌ Connector output not found!"
-            exit 1
-          fi
-
           mkdir connector
           cp -r output/connector-generator/output/* connector/
 
@@ -103,7 +139,7 @@ jobs:
           path: connector-repo
 
       # =========================
-      # Commit & push changes
+      # Commit & push
       # =========================
       - name: Commit connectors
         run: |
@@ -121,18 +157,17 @@ jobs:
           git push origin $BRANCH --force
 
       # =========================
-      # Create Pull Request
+      # Create PR
       # =========================
       - name: Create PR
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GH_PAT }}
-          commit-message: "Auto connectors for ${{ steps.extract.outputs.dataset }}"
+          path: connector-repo
           branch: auto/connector-${{ steps.extract.outputs.dataset }}
+          base: main
+          commit-message: "Auto connectors for ${{ steps.extract.outputs.dataset }}"
           title: "Connector: ${{ steps.extract.outputs.dataset }}"
           body: |
-            Generated connectors after API spec merge.
-
+            Generated connectors after spec merge.
             Dataset: ${{ steps.extract.outputs.dataset }}
-          base: main
-          path: connector-repo
