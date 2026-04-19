@@ -28,6 +28,7 @@ jobs:
         with:
           repository: KKanistan06/ballerina-connector-automation
           token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
 
       # =========================
       # Setup Java 21
@@ -39,18 +40,18 @@ jobs:
           java-version: 21
 
       # =========================
-      # 🔥 FIX: Install correct Ballerina
+      # Install Ballerina 2201.13.1 (STRICT)
       # =========================
-      - name: Install Ballerina 2201.13.1
+      - name: Install Ballerina
         run: |
           curl -L https://dist.ballerina.io/downloads/2201.13.1/ballerina-2201.13.1-swan-lake-linux-x64.deb -o ballerina.deb
           sudo dpkg -i ballerina.deb
 
-      - name: Verify Ballerina
+      - name: Verify Ballerina version
         run: bal version
 
       # =========================
-      # 🔥 FIX: Build native module
+      # Build native Java module
       # =========================
       - name: Build native Java module
         run: |
@@ -60,22 +61,16 @@ jobs:
           cd ../../..
 
       # =========================
-      # Clean + Pull deps
+      # Clean + Build CLI
       # =========================
-      - name: Clean
+      - name: Clean project
         run: bal clean
 
-      - name: Pull deps
-        run: bal pull
-
-      # =========================
-      # Build CLI
-      # =========================
       - name: Build CLI
         run: bal build
 
       # =========================
-      # Run pipeline
+      # Run full pipeline
       # =========================
       - name: Run connector pipeline
         run: |
@@ -85,24 +80,59 @@ jobs:
           bal run -- generate-documents generate-all ${{ steps.extract.outputs.dataset }}
 
       # =========================
-      # Prepare output
+      # Prepare connector output
       # =========================
       - name: Prepare connector output
         run: |
+          if [ ! -d output/connector-generator/output ]; then
+            echo "❌ Connector output not found!"
+            exit 1
+          fi
+
           mkdir connector
           cp -r output/connector-generator/output/* connector/
 
       # =========================
-      # Create PR
+      # Checkout connector repo
       # =========================
-      - name: Create PR to connector repo
+      - name: Checkout connector repo
+        uses: actions/checkout@v4
+        with:
+          repository: KKanistan06/generated-connectors
+          token: ${{ secrets.GH_PAT }}
+          path: connector-repo
+
+      # =========================
+      # Commit & push changes
+      # =========================
+      - name: Commit connectors
+        run: |
+          cp -r connector/* connector-repo/
+
+          cd connector-repo
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          BRANCH="auto/connector-${{ steps.extract.outputs.dataset }}"
+          git checkout -b $BRANCH || git checkout $BRANCH
+
+          git add .
+          git commit -m "Auto connectors for ${{ steps.extract.outputs.dataset }}" || echo "No changes"
+          git push origin $BRANCH --force
+
+      # =========================
+      # Create Pull Request
+      # =========================
+      - name: Create PR
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GH_PAT }}
           commit-message: "Auto connectors for ${{ steps.extract.outputs.dataset }}"
           branch: auto/connector-${{ steps.extract.outputs.dataset }}
           title: "Connector: ${{ steps.extract.outputs.dataset }}"
-          body: "Generated connectors after spec merge"
+          body: |
+            Generated connectors after API spec merge.
+
+            Dataset: ${{ steps.extract.outputs.dataset }}
           base: main
-          path: connector/
-          repository: KKanistan06/generated-connectors
+          path: connector-repo
