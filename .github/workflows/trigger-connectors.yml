@@ -1,0 +1,57 @@
+name: Generate Connectors After Spec Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  generate-connectors:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      # Extract dataset key from branch name
+      - name: Extract dataset key
+        id: extract
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          DATASET=$(echo $BRANCH | sed 's/auto\/spec-//')
+          echo "dataset=$DATASET" >> $GITHUB_OUTPUT
+
+      # Checkout CLI repo
+      - name: Checkout CLI repo
+        uses: actions/checkout@v4
+        with:
+          repository: KKanistan06/YOUR-CLI-REPO
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Setup Ballerina
+        uses: ballerina-platform/setup-ballerina@v1
+
+      - name: Build CLI
+        run: bal build
+
+      # Run remaining modules
+      - name: Run connector pipeline
+        run: |
+          bal run -- connector ${{ steps.extract.outputs.dataset }}
+          bal run -- generate-tests ${{ steps.extract.outputs.dataset }}
+          bal run -- fix-code ${{ steps.extract.outputs.dataset }}
+          bal run -- generate-documents generate-all ${{ steps.extract.outputs.dataset }}
+
+      - name: Prepare connector output
+        run: |
+          mkdir connector
+          cp -r output/connector-generator/output/* connector/
+
+      - name: Create PR to connector repo
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_PAT }}
+          commit-message: "Auto connectors for ${{ steps.extract.outputs.dataset }}"
+          branch: auto/connector-${{ steps.extract.outputs.dataset }}
+          title: "Connector: ${{ steps.extract.outputs.dataset }}"
+          body: "Generated connectors after spec merge"
+          base: main
+          path: connector/
+          repository: KKanistan06/generated-connectors
