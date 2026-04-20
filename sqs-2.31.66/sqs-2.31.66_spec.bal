@@ -245,24 +245,6 @@ public type ChangeMessageVisibilityBatchResponse record {|
     BatchResultErrorEntry[] failed?;
 |};
 
-# Represents a ListDeadLetterSourceQueuesRequest record.
-public type ListDeadLetterSourceQueuesRequest record {|
-    # The URL of a dead-letter queue
-    string queueUrl;
-    # Pagination token to request the next set of results
-    string nextToken?;
-    # Maximum number of results to include in the response
-    int maxResults?;
-|};
-
-# Represents a ListDeadLetterSourceQueuesResponse record.
-public type ListDeadLetterSourceQueuesResponse record {|
-    # A list of source queue URLs that have the RedrivePolicy queue attribute configured with a dead-letter queue
-    string[] queueUrls?;
-    # Pagination token to include in the next request
-    string nextToken?;
-|};
-
 # Represents a AddPermissionRequest record.
 public type AddPermissionRequest record {|
     # The URL of the Amazon SQS queue to which permissions are added
@@ -283,6 +265,36 @@ public type RemovePermissionRequest record {|
     string label;
 |};
 
+# Represents a ListDeadLetterSourceQueuesRequest record.
+public type ListDeadLetterSourceQueuesRequest record {|
+    # The URL of a dead-letter queue
+    string queueUrl;
+    # Pagination token to request the next set of results
+    string nextToken?;
+    # Maximum number of results to include in the response
+    int maxResults?;
+|};
+
+# Represents a ListDeadLetterSourceQueuesResponse record.
+public type ListDeadLetterSourceQueuesResponse record {|
+    # A list of source queue URLs that have the RedrivePolicy queue attribute configured with a dead-letter queue
+    string[] queueUrls?;
+    # Pagination token to include in the next request
+    string nextToken?;
+|};
+
+# Represents a ListQueueTagsRequest record.
+public type ListQueueTagsRequest record {|
+    # The URL of the queue
+    string queueUrl;
+|};
+
+# Represents a ListQueueTagsResponse record.
+public type ListQueueTagsResponse record {|
+    # The list of all tags added to the specified queue
+    map<string> tags?;
+|};
+
 # Represents a TagQueueRequest record.
 public type TagQueueRequest record {|
     # The URL of the queue
@@ -297,18 +309,6 @@ public type UntagQueueRequest record {|
     string queueUrl;
     # The list of tags to be removed from the specified queue
     string[] tagKeys;
-|};
-
-# Represents a ListQueueTagsRequest record.
-public type ListQueueTagsRequest record {|
-    # The URL of the queue
-    string queueUrl;
-|};
-
-# Represents a ListQueueTagsResponse record.
-public type ListQueueTagsResponse record {|
-    # The list of all tags added to the specified queue
-    map<string> tags?;
 |};
 
 # Represents a StartMessageMoveTaskRequest record.
@@ -362,7 +362,7 @@ public type MessageAttributeValue record {|
     # Not implemented
     string[] stringListValues?;
     # Not implemented
-    byte[][] binaryListValues?;
+    anydata[] binaryListValues?;
     # Amazon SQS supports the following logical data types: String, Number, and Binary
     string dataType?;
 |};
@@ -376,7 +376,7 @@ public type MessageSystemAttributeValue record {|
     # Not implemented
     string[] stringListValues?;
     # Not implemented
-    byte[][] binaryListValues?;
+    anydata[] binaryListValues?;
     # Amazon SQS supports the following logical data types: String, Number, and Binary
     string dataType?;
 |};
@@ -691,14 +691,6 @@ public isolated client class Client {
     remote isolated function changeMessageVisibilityBatch(string queueUrl, ChangeMessageVisibilityBatchRequestEntry[] entries) returns ChangeMessageVisibilityBatchResponse|error {
     }
 
-    # Returns a list of your queues that have the RedrivePolicy queue attribute configured with a dead-letter queue
-    #
-    # + queueUrl - The URL of a dead-letter queue
-    # + config - Optional ListDeadLetterSourceQueuesConfig parameters
-    # + return - The listDeadLetterSourceQueues response
-    remote isolated function listDeadLetterSourceQueues(string queueUrl, *ListDeadLetterSourceQueuesConfig config) returns ListDeadLetterSourceQueuesResponse|error {
-    }
-
     # Adds a permission to a queue for a specific principal
     #
     # + queueUrl - The URL of the Amazon SQS queue to which permissions are added
@@ -717,6 +709,21 @@ public isolated client class Client {
     remote isolated function removePermission(string queueUrl, string label) returns error? {
     }
 
+    # Returns a list of your queues that have the RedrivePolicy queue attribute configured with a dead-letter queue
+    #
+    # + queueUrl - The URL of a dead-letter queue
+    # + config - Optional ListDeadLetterSourceQueuesConfig parameters
+    # + return - The listDeadLetterSourceQueues response
+    remote isolated function listDeadLetterSourceQueues(string queueUrl, *ListDeadLetterSourceQueuesConfig config) returns ListDeadLetterSourceQueuesResponse|error {
+    }
+
+    # List all cost allocation tags added to the specified Amazon SQS queue
+    #
+    # + queueUrl - The URL of the queue
+    # + return - The listQueueTags response
+    remote isolated function listQueueTags(string queueUrl) returns ListQueueTagsResponse|error {
+    }
+
     # Add cost allocation tags to the specified Amazon SQS queue
     #
     # + queueUrl - The URL of the queue
@@ -731,13 +738,6 @@ public isolated client class Client {
     # + tagKeys - The list of tags to be removed from the specified queue
     # + return - An error if the operation fails, or nil on success
     remote isolated function untagQueue(string queueUrl, string[] tagKeys) returns error? {
-    }
-
-    # List all cost allocation tags added to the specified Amazon SQS queue
-    #
-    # + queueUrl - The URL of the queue
-    # + return - The listQueueTags response
-    remote isolated function listQueueTags(string queueUrl) returns ListQueueTagsResponse|error {
     }
 
     # Starts an asynchronous task to move messages from a specified source queue to a specified destination queue
