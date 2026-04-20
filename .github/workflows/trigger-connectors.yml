@@ -31,7 +31,7 @@ jobs:
           path: cli
 
       # =========================
-      # Checkout Spec repo (IMPORTANT)
+      # Checkout spec repo
       # =========================
       - name: Checkout spec repo
         uses: actions/checkout@v4
@@ -52,7 +52,7 @@ jobs:
       # =========================
       # Install Ballerina
       # =========================
-      - name: Install Ballerina 2201.13.1
+      - name: Install Ballerina
         run: |
           curl -L https://dist.ballerina.io/downloads/2201.13.1/ballerina-2201.13.1-swan-lake-linux-x64.deb -o ballerina.deb
           sudo dpkg -i ballerina.deb
@@ -72,7 +72,7 @@ jobs:
           cd ../../..
 
       # =========================
-      # Prepare dataset files (🔥 CRITICAL FIX)
+      # 🔥 FIX: Prepare dataset correctly
       # =========================
       - name: Prepare dataset files
         run: |
@@ -80,37 +80,43 @@ jobs:
 
           echo "📦 Preparing dataset: $DATASET"
 
+          # Debug
           echo "📂 Spec repo structure:"
           find spec -maxdepth 3
 
-          # Ensure dataset exists
           if [ ! -d "spec/$DATASET" ]; then
-            echo "❌ Dataset folder not found in spec repo!"
+            echo "❌ Dataset folder missing!"
             exit 1
           fi
 
-          # Create expected path inside CLI
+          # Create required folders
           mkdir -p cli/modules/sdkanalyzer/output
+          mkdir -p cli/modules/api_specification_generator/IR-output
 
-          # Copy required files
+          # Copy metadata
           cp spec/$DATASET/*metadata.json cli/modules/sdkanalyzer/output/
-          cp spec/$DATASET/*ir.json cli/modules/sdkanalyzer/output/
 
-          echo "📂 Output directory contents:"
+          # 🔥 FIX: Copy IR to correct folder
+          cp spec/$DATASET/*ir.json cli/modules/api_specification_generator/IR-output/
+
+          echo "📂 Metadata path:"
           ls cli/modules/sdkanalyzer/output
 
-          # Strict validation
+          echo "📂 IR path:"
+          ls cli/modules/api_specification_generator/IR-output
+
+          # Validation
           if [ ! -f "cli/modules/sdkanalyzer/output/${DATASET}-metadata.json" ]; then
             echo "❌ metadata.json missing!"
             exit 1
           fi
 
-          if [ ! -f "cli/modules/sdkanalyzer/output/${DATASET}-ir.json" ]; then
-            echo "❌ ir.json missing!"
+          if [ ! -f "cli/modules/api_specification_generator/IR-output/${DATASET}-ir.json" ]; then
+            echo "❌ IR.json missing!"
             exit 1
           fi
 
-          echo "✅ Dataset prepared successfully"
+          echo "✅ Dataset ready"
 
       # =========================
       # Build CLI
@@ -143,7 +149,7 @@ jobs:
           cp -r cli/output/connector-generator/output/* connector/
 
       # =========================
-      # Create PR to connector repo
+      # Create PR
       # =========================
       - name: Create PR to connector repo
         uses: peter-evans/create-pull-request@v6
