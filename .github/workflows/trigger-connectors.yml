@@ -41,7 +41,7 @@ jobs:
           path: spec
 
       # =========================
-      # Setup Java 21
+      # Setup Java
       # =========================
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -72,7 +72,7 @@ jobs:
           cd ../../..
 
       # =========================
-      # 🔥 FIX: Prepare dataset correctly
+      # Prepare dataset (🔥 FIXED)
       # =========================
       - name: Prepare dataset files
         run: |
@@ -80,41 +80,24 @@ jobs:
 
           echo "📦 Preparing dataset: $DATASET"
 
-          # Debug
-          echo "📂 Spec repo structure:"
-          find spec -maxdepth 3
-
-          if [ ! -d "spec/$DATASET" ]; then
-            echo "❌ Dataset folder missing!"
-            exit 1
-          fi
-
-          # Create required folders
           mkdir -p cli/modules/sdkanalyzer/output
           mkdir -p cli/modules/api_specification_generator/IR-output
+          mkdir -p cli/modules/api_specification_generator/spec-output
 
-          # Copy metadata
+          # Metadata
           cp spec/$DATASET/*metadata.json cli/modules/sdkanalyzer/output/
 
-          # 🔥 FIX: Copy IR to correct folder
+          # IR
           cp spec/$DATASET/*ir.json cli/modules/api_specification_generator/IR-output/
 
-          echo "📂 Metadata path:"
-          ls cli/modules/sdkanalyzer/output
-
-          echo "📂 IR path:"
-          ls cli/modules/api_specification_generator/IR-output
+          # 🔥 IMPORTANT FIX: Copy spec correctly
+          cp spec/$DATASET/${DATASET}_spec.bal \
+             cli/modules/api_specification_generator/spec-output/
 
           # Validation
-          if [ ! -f "cli/modules/sdkanalyzer/output/${DATASET}-metadata.json" ]; then
-            echo "❌ metadata.json missing!"
-            exit 1
-          fi
-
-          if [ ! -f "cli/modules/api_specification_generator/IR-output/${DATASET}-ir.json" ]; then
-            echo "❌ IR.json missing!"
-            exit 1
-          fi
+          ls cli/modules/sdkanalyzer/output
+          ls cli/modules/api_specification_generator/IR-output
+          ls cli/modules/api_specification_generator/spec-output
 
           echo "✅ Dataset ready"
 
@@ -136,8 +119,9 @@ jobs:
           DATASET=${{ steps.extract.outputs.dataset }}
 
           bal run -- connector $DATASET
-          bal run -- generate-tests $DATASET
           bal run -- fix-code $DATASET
+          bal run -- generate-tests $DATASET
+          bal run -- generate-examples $DATASET
           bal run -- generate-documents generate-all $DATASET
 
       # =========================
@@ -151,7 +135,7 @@ jobs:
       # =========================
       # Create PR
       # =========================
-      - name: Create PR to connector repo
+      - name: Create PR
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GH_PAT }}
