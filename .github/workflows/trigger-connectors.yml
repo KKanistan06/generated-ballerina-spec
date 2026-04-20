@@ -8,8 +8,8 @@ jobs:
   generate-connectors:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    timeout-minutes: 120   # 🔥 IMPORTANT
 
-    # 🔥 REQUIRED ENV (LLM FIX)
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       PROJECT_ROOT: ${{ github.workspace }}
@@ -26,7 +26,7 @@ jobs:
           echo "dataset=$DATASET" >> $GITHUB_OUTPUT
 
       # =========================
-      # Checkout CLI repo
+      # Checkout repos
       # =========================
       - name: Checkout CLI repo
         uses: actions/checkout@v4
@@ -35,9 +35,6 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           path: cli
 
-      # =========================
-      # Checkout spec repo
-      # =========================
       - name: Checkout spec repo
         uses: actions/checkout@v4
         with:
@@ -46,24 +43,28 @@ jobs:
           path: spec
 
       # =========================
-      # ⚡ Cache dependencies (BIG SPEED BOOST)
-      # =========================
-      - name: Cache Ballerina + Gradle
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.ballerina
-            ~/.gradle
-          key: ballerina-${{ runner.os }}-${{ hashFiles('**/*.toml') }}
-
-      # =========================
       # Setup Java
       # =========================
-      - name: Setup Java 21
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
+
+      # =========================
+      # Cache (🔥 speed boost)
+      # =========================
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+
+      - name: Cache Ballerina
+        uses: actions/cache@v4
+        with:
+          path: ~/.ballerina
+          key: ballerina-${{ runner.os }}
 
       # =========================
       # Install Ballerina
@@ -94,26 +95,13 @@ jobs:
         run: |
           DATASET=${{ steps.extract.outputs.dataset }}
 
-          echo "📦 Preparing dataset: $DATASET"
-
           mkdir -p cli/modules/sdkanalyzer/output
           mkdir -p cli/modules/api_specification_generator/IR-output
           mkdir -p cli/modules/api_specification_generator/spec-output
 
           cp spec/$DATASET/*metadata.json cli/modules/sdkanalyzer/output/
           cp spec/$DATASET/*ir.json cli/modules/api_specification_generator/IR-output/
-          cp spec/$DATASET/${DATASET}_spec.bal cli/modules/api_specification_generator/spec-output/
-
-          echo "📂 Metadata:"
-          ls cli/modules/sdkanalyzer/output
-
-          echo "📂 IR:"
-          ls cli/modules/api_specification_generator/IR-output
-
-          echo "📂 Spec:"
-          ls cli/modules/api_specification_generator/spec-output
-
-          echo "✅ Dataset ready"
+          cp spec/$DATASET/*.bal cli/modules/api_specification_generator/spec-output/${DATASET}_spec.bal
 
       # =========================
       # Build CLI
@@ -125,25 +113,19 @@ jobs:
           bal build
 
       # =========================
-      # ⏱ DEBUG START TIME
-      # =========================
-      - name: Start timer
-        run: |
-          echo "⏱ START TIME:"
-          date
-
-      # =========================
-      # 🚀 RUN CONNECTOR (WITH HARD TIMEOUT)
+      # Run pipeline (🔥 FIXED)
       # =========================
       - name: Run connector pipeline
         working-directory: cli
-        timeout-minutes: 30   # 🔥 prevents 1h+ hanging
         run: |
           DATASET=${{ steps.extract.outputs.dataset }}
 
           echo "🚀 Running connector generation..."
 
-          bal run -- connector $DATASET
+          timeout 50m bal run -- connector $DATASET || {
+            echo "❌ Connector generation timed out"
+            exit 1
+          }
 
           echo "🧪 Generating tests..."
           bal run -- generate-tests $DATASET
@@ -153,14 +135,6 @@ jobs:
 
           echo "📄 Generating docs..."
           bal run -- generate-documents generate-all $DATASET
-
-      # =========================
-      # ⏱ DEBUG END TIME
-      # =========================
-      - name: End timer
-        run: |
-          echo "⏱ END TIME:"
-          date
 
       # =========================
       # Prepare output
