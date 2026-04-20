@@ -435,7 +435,7 @@ public type SendMessageBatchRequestEntry record {|
     int delaySeconds?;
     # Each message attribute consists of a Name, Type, and Value
     map<MessageAttributeValue> messageAttributes?;
-    # The message system attribute to send. Each message system attribute consists of a Name, Type, and Value
+    # The message system attribute to send Each message system attribute consists of a Name, Type, and Value
     map<MessageSystemAttributeValue> messageSystemAttributes?;
     # This parameter applies only to FIFO (first-in-first-out) queues
     string messageDeduplicationId?;
@@ -571,7 +571,7 @@ public type ListMessageMoveTasksConfig record {|
     int maxResults?;
 |};
 
-# A client for interacting with Amazon Simple Queue Service (SQS) to send, receive, and manage messages and queues.
+# Client for interacting with Amazon Simple Queue Service (SQS) to send, receive, and manage messages and queues.
 public isolated client class Client {
 
     # Initializes the Sqs Client.

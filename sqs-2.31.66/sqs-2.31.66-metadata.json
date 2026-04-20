@@ -7,7 +7,7 @@
   "clientInit": {
     "patternName": "static-factory",
     "initializationCode": "SqsClient client = SqsClient.create();",
-    "explanation": "SqsClient is an interface with no public constructors, offering both `create()` for default instantiation and `builder()` for customized configuration. The `create()` static factory method is the recommended quick-start approach, while `builder()` provides flexibility for advanced configuration like credentials, region, and endpoint overrides.",
+    "explanation": "SqsClient is an interface with no public constructors, offering both `create()` for default instantiation and `builder()` for customized configuration. The `create()` static factory method is the recommended quick-start pattern, while `builder()` provides flexibility for advanced configuration like credentials, region, and endpoint overrides.",
     "detectedBy": "llm",
     "builderClass": "software.amazon.awssdk.services.sqs.SqsClientBuilder",
     "connectionFields": [
