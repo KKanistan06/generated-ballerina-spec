@@ -7,7 +7,7 @@
   "clientInit": {
     "patternName": "static-factory",
     "initializationCode": "SqsClient client = SqsClient.create();",
-    "explanation": "SqsClient is an interface with no public constructors, offering both `create()` for default instantiation and `builder()` for customized configuration. The `create()` static factory method is the recommended quick-start pattern for developers who need a client with default settings, while `builder()` provides flexibility for advanced configuration.",
+    "explanation": "SqsClient is an interface with no public constructors, offering both `create()` for default instantiation and `builder()` for customized configuration. The `create()` static factory method is the recommended quick-start approach, while `builder()` provides flexibility for advanced configuration like credentials, region, and endpoint overrides.",
     "detectedBy": "llm",
     "builderClass": "software.amazon.awssdk.services.sqs.SqsClientBuilder",
     "connectionFields": [
@@ -925,6 +925,73 @@
         "description": "Changes the visibility timeout of multiple messages."
       },
       {
+        "name": "listDeadLetterSourceQueues",
+        "parameters": [
+          {
+            "name": "listDeadLetterSourceQueuesRequest",
+            "typeName": "software.amazon.awssdk.services.sqs.model.ListDeadLetterSourceQueuesRequest",
+            "requestFields": [
+              {
+                "name": "queueUrl",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The URL of a dead-letter queue."
+              },
+              {
+                "name": "nextToken",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "Pagination token to request the next set of results."
+              },
+              {
+                "name": "maxResults",
+                "typeName": "Integer",
+                "fullType": "java.lang.Integer",
+                "isRequired": false,
+                "description": "Maximum number of results to include in the response."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sqs.model.ListDeadLetterSourceQueuesResponse",
+        "returnFields": [
+          {
+            "name": "queueUrls",
+            "typeName": "List",
+            "fullType": "java.util.List<java.lang.String>",
+            "isRequired": false,
+            "description": "A list of source queue URLs that have the RedrivePolicy queue attribute configured with a dead-letter queue."
+          },
+          {
+            "name": "nextToken",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "Pagination token to include in the next request."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sqs.model.QueueDoesNotExistException",
+          "software.amazon.awssdk.services.sqs.model.RequestThrottledException",
+          "software.amazon.awssdk.services.sqs.model.InvalidSecurityException",
+          "software.amazon.awssdk.services.sqs.model.InvalidAddressException",
+          "software.amazon.awssdk.services.sqs.model.UnsupportedOperationException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sqs.model.SqsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listDeadLetterSourceQueues",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns a list of your queues that have the RedrivePolicy queue attribute configured with a dead-letter queue."
+      },
+      {
         "name": "addPermission",
         "parameters": [
           {
@@ -1028,73 +1095,6 @@
         "typeParameters": [],
         "annotations": [],
         "description": "Revokes any permissions in the queue policy that matches the specified Label parameter."
-      },
-      {
-        "name": "listDeadLetterSourceQueues",
-        "parameters": [
-          {
-            "name": "listDeadLetterSourceQueuesRequest",
-            "typeName": "software.amazon.awssdk.services.sqs.model.ListDeadLetterSourceQueuesRequest",
-            "requestFields": [
-              {
-                "name": "queueUrl",
-                "typeName": "String",
-                "fullType": "java.lang.String",
-                "isRequired": true,
-                "description": "The URL of a dead-letter queue."
-              },
-              {
-                "name": "nextToken",
-                "typeName": "String",
-                "fullType": "java.lang.String",
-                "isRequired": false,
-                "description": "Pagination token to request the next set of results."
-              },
-              {
-                "name": "maxResults",
-                "typeName": "Integer",
-                "fullType": "java.lang.Integer",
-                "isRequired": false,
-                "description": "Maximum number of results to include in the response."
-              }
-            ]
-          }
-        ],
-        "returnType": "software.amazon.awssdk.services.sqs.model.ListDeadLetterSourceQueuesResponse",
-        "returnFields": [
-          {
-            "name": "queueUrls",
-            "typeName": "List",
-            "fullType": "java.util.List<java.lang.String>",
-            "isRequired": false,
-            "description": "A list of source queue URLs that have the RedrivePolicy queue attribute configured with a dead-letter queue."
-          },
-          {
-            "name": "nextToken",
-            "typeName": "String",
-            "fullType": "java.lang.String",
-            "isRequired": false,
-            "description": "Pagination token to include in the next request."
-          }
-        ],
-        "exceptions": [
-          "software.amazon.awssdk.services.sqs.model.QueueDoesNotExistException",
-          "software.amazon.awssdk.services.sqs.model.RequestThrottledException",
-          "software.amazon.awssdk.services.sqs.model.InvalidSecurityException",
-          "software.amazon.awssdk.services.sqs.model.InvalidAddressException",
-          "software.amazon.awssdk.services.sqs.model.UnsupportedOperationException",
-          "software.amazon.awssdk.awscore.exception.AwsServiceException",
-          "software.amazon.awssdk.core.exception.SdkClientException",
-          "software.amazon.awssdk.services.sqs.model.SqsException"
-        ],
-        "isStatic": false,
-        "isFinal": false,
-        "isAbstract": false,
-        "signature": "listDeadLetterSourceQueues",
-        "isDeprecated": false,
-        "typeParameters": [],
-        "annotations": [],
-        "description": "Returns a list of your queues that have the RedrivePolicy queue attribute configured with a dead-letter queue."
       },
       {
         "name": "listQueueTags",

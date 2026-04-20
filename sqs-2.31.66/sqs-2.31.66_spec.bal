@@ -245,6 +245,24 @@ public type ChangeMessageVisibilityBatchResponse record {|
     BatchResultErrorEntry[] failed?;
 |};
 
+# Represents a ListDeadLetterSourceQueuesRequest record.
+public type ListDeadLetterSourceQueuesRequest record {|
+    # The URL of a dead-letter queue
+    string queueUrl;
+    # Pagination token to request the next set of results
+    string nextToken?;
+    # Maximum number of results to include in the response
+    int maxResults?;
+|};
+
+# Represents a ListDeadLetterSourceQueuesResponse record.
+public type ListDeadLetterSourceQueuesResponse record {|
+    # A list of source queue URLs that have the RedrivePolicy queue attribute configured with a dead-letter queue
+    string[] queueUrls?;
+    # Pagination token to include in the next request
+    string nextToken?;
+|};
+
 # Represents a AddPermissionRequest record.
 public type AddPermissionRequest record {|
     # The URL of the Amazon SQS queue to which permissions are added
@@ -263,24 +281,6 @@ public type RemovePermissionRequest record {|
     string queueUrl;
     # The identification of the permission to remove
     string label;
-|};
-
-# Represents a ListDeadLetterSourceQueuesRequest record.
-public type ListDeadLetterSourceQueuesRequest record {|
-    # The URL of a dead-letter queue
-    string queueUrl;
-    # Pagination token to request the next set of results
-    string nextToken?;
-    # Maximum number of results to include in the response
-    int maxResults?;
-|};
-
-# Represents a ListDeadLetterSourceQueuesResponse record.
-public type ListDeadLetterSourceQueuesResponse record {|
-    # A list of source queue URLs that have the RedrivePolicy queue attribute configured with a dead-letter queue
-    string[] queueUrls?;
-    # Pagination token to include in the next request
-    string nextToken?;
 |};
 
 # Represents a ListQueueTagsRequest record.
@@ -362,7 +362,7 @@ public type MessageAttributeValue record {|
     # Not implemented
     string[] stringListValues?;
     # Not implemented
-    anydata[] binaryListValues?;
+    byte[][] binaryListValues?;
     # Amazon SQS supports the following logical data types: String, Number, and Binary
     string dataType?;
 |};
@@ -376,7 +376,7 @@ public type MessageSystemAttributeValue record {|
     # Not implemented
     string[] stringListValues?;
     # Not implemented
-    anydata[] binaryListValues?;
+    byte[][] binaryListValues?;
     # Amazon SQS supports the following logical data types: String, Number, and Binary
     string dataType?;
 |};
@@ -435,7 +435,7 @@ public type SendMessageBatchRequestEntry record {|
     int delaySeconds?;
     # Each message attribute consists of a Name, Type, and Value
     map<MessageAttributeValue> messageAttributes?;
-    # The message system attribute to send Each message system attribute consists of a Name, Type, and Value
+    # The message system attribute to send. Each message system attribute consists of a Name, Type, and Value
     map<MessageSystemAttributeValue> messageSystemAttributes?;
     # This parameter applies only to FIFO (first-in-first-out) queues
     string messageDeduplicationId?;
@@ -691,6 +691,14 @@ public isolated client class Client {
     remote isolated function changeMessageVisibilityBatch(string queueUrl, ChangeMessageVisibilityBatchRequestEntry[] entries) returns ChangeMessageVisibilityBatchResponse|error {
     }
 
+    # Returns a list of your queues that have the RedrivePolicy queue attribute configured with a dead-letter queue
+    #
+    # + queueUrl - The URL of a dead-letter queue
+    # + config - Optional ListDeadLetterSourceQueuesConfig parameters
+    # + return - The listDeadLetterSourceQueues response
+    remote isolated function listDeadLetterSourceQueues(string queueUrl, *ListDeadLetterSourceQueuesConfig config) returns ListDeadLetterSourceQueuesResponse|error {
+    }
+
     # Adds a permission to a queue for a specific principal
     #
     # + queueUrl - The URL of the Amazon SQS queue to which permissions are added
@@ -707,14 +715,6 @@ public isolated client class Client {
     # + label - The identification of the permission to remove
     # + return - An error if the operation fails, or nil on success
     remote isolated function removePermission(string queueUrl, string label) returns error? {
-    }
-
-    # Returns a list of your queues that have the RedrivePolicy queue attribute configured with a dead-letter queue
-    #
-    # + queueUrl - The URL of a dead-letter queue
-    # + config - Optional ListDeadLetterSourceQueuesConfig parameters
-    # + return - The listDeadLetterSourceQueues response
-    remote isolated function listDeadLetterSourceQueues(string queueUrl, *ListDeadLetterSourceQueuesConfig config) returns ListDeadLetterSourceQueuesResponse|error {
     }
 
     # List all cost allocation tags added to the specified Amazon SQS queue
