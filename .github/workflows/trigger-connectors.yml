@@ -9,6 +9,11 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
+    # 🔥 FIX 1: Add environment variables HERE
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      PROJECT_ROOT: ${{ github.workspace }}
+
     steps:
       # =========================
       # Extract dataset key
@@ -72,7 +77,7 @@ jobs:
           cd ../../..
 
       # =========================
-      # Prepare dataset (🔥 FIXED)
+      # Prepare dataset
       # =========================
       - name: Prepare dataset files
         run: |
@@ -84,19 +89,23 @@ jobs:
           mkdir -p cli/modules/api_specification_generator/IR-output
           mkdir -p cli/modules/api_specification_generator/spec-output
 
-          # Metadata
+          # Copy metadata
           cp spec/$DATASET/*metadata.json cli/modules/sdkanalyzer/output/
 
-          # IR
+          # Copy IR
           cp spec/$DATASET/*ir.json cli/modules/api_specification_generator/IR-output/
 
-          # 🔥 IMPORTANT FIX: Copy spec correctly
+          # Copy spec (correct name)
           cp spec/$DATASET/${DATASET}_spec.bal \
              cli/modules/api_specification_generator/spec-output/
 
-          # Validation
+          echo "📂 Metadata:"
           ls cli/modules/sdkanalyzer/output
+
+          echo "📂 IR:"
           ls cli/modules/api_specification_generator/IR-output
+
+          echo "📂 Spec:"
           ls cli/modules/api_specification_generator/spec-output
 
           echo "✅ Dataset ready"
@@ -111,17 +120,18 @@ jobs:
           bal build
 
       # =========================
-      # Run pipeline
+      # Run connector pipeline
       # =========================
       - name: Run connector pipeline
         working-directory: cli
         run: |
           DATASET=${{ steps.extract.outputs.dataset }}
 
+          echo "🚀 Running connector generation with LLM..."
+
           bal run -- connector $DATASET
-          bal run -- fix-code $DATASET
           bal run -- generate-tests $DATASET
-          bal run -- generate-examples $DATASET
+          bal run -- fix-code $DATASET
           bal run -- generate-documents generate-all $DATASET
 
       # =========================
