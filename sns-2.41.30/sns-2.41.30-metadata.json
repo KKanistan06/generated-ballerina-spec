@@ -1,0 +1,2148 @@
+{
+  "sdkInfo": {
+    "name": "Sns SDK",
+    "version": "unknown",
+    "rootClientClass": "software.amazon.awssdk.services.sns.SnsClient"
+  },
+  "clientInit": {
+    "patternName": "static-factory",
+    "initializationCode": "SnsClient client = SnsClient.create();",
+    "explanation": "SnsClient is an interface with no public constructors, offering both `create()` for default instantiation and `builder()` for customized configuration. The `create()` static factory method is the recommended simple instantiation path, while `builder()` provides advanced configuration options when needed.",
+    "detectedBy": "llm",
+    "builderClass": "software.amazon.awssdk.services.sns.SnsClientBuilder",
+    "connectionFields": [
+      {
+        "name": "endpointProvider",
+        "typeName": "SnsEndpointProvider",
+        "fullType": "software.amazon.awssdk.services.sns.endpoints.SnsEndpointProvider",
+        "isRequired": false,
+        "typeReference": "software.amazon.awssdk.services.sns.endpoints.SnsEndpointProvider",
+        "description": "Set the SnsEndpointProvider implementation that will be used by the client to determine the endpoint for each request.",
+        "level1Context": null
+      },
+      {
+        "name": "authSchemeProvider",
+        "typeName": "SnsAuthSchemeProvider",
+        "fullType": "software.amazon.awssdk.services.sns.auth.scheme.SnsAuthSchemeProvider",
+        "isRequired": false,
+        "typeReference": "software.amazon.awssdk.services.sns.auth.scheme.SnsAuthSchemeProvider",
+        "description": "Set the SnsAuthSchemeProvider implementation that will be used by the client to resolve the auth scheme for each request.",
+        "level1Context": null
+      }
+    ],
+    "syntheticTypeMetadata": []
+  },
+  "rootClient": {
+    "className": "software.amazon.awssdk.services.sns.SnsClient",
+    "packageName": "software.amazon.awssdk.services.sns",
+    "simpleName": "SnsClient",
+    "isInterface": true,
+    "constructors": [],
+    "methods": [
+      {
+        "name": "publish",
+        "parameters": [
+          {
+            "name": "publishRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.PublishRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "The topic you want to publish to."
+              },
+              {
+                "name": "targetArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "If you don't specify a value for the TargetArn parameter, you must specify a value for the PhoneNumber or TopicArn parameters."
+              },
+              {
+                "name": "phoneNumber",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "The phone number to which you want to deliver an SMS message."
+              },
+              {
+                "name": "message",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The message you want to send."
+              },
+              {
+                "name": "subject",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "Optional parameter to be used as the \"Subject\" line when the message is delivered to email endpoints."
+              },
+              {
+                "name": "messageStructure",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "Set MessageStructure to json if you want to send a different message for each protocol."
+              },
+              {
+                "name": "messageAttributes",
+                "typeName": "Map",
+                "fullType": "java.util.Map<java.lang.String, software.amazon.awssdk.services.sns.model.MessageAttributeValue>",
+                "isRequired": false,
+                "memberReference": "software.amazon.awssdk.services.sns.model.MessageAttributeValue",
+                "description": "Message attributes for Publish action."
+              },
+              {
+                "name": "messageDeduplicationId",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": null
+              },
+              {
+                "name": "messageGroupId",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "The MessageGroupId can contain up to 128 alphanumeric characters (a-z, A-Z, 0-9) and punctuation (!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~)."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.PublishResponse",
+        "returnFields": [
+          {
+            "name": "messageId",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "Unique identifier assigned to the published message."
+          },
+          {
+            "name": "sequenceNumber",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "This response element applies only to FIFO (first-in-first-out) topics."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterValueException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.EndpointDisabledException",
+          "software.amazon.awssdk.services.sns.model.PlatformApplicationDisabledException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.KmsDisabledException",
+          "software.amazon.awssdk.services.sns.model.KmsInvalidStateException",
+          "software.amazon.awssdk.services.sns.model.KmsNotFoundException",
+          "software.amazon.awssdk.services.sns.model.KmsOptInRequiredException",
+          "software.amazon.awssdk.services.sns.model.KmsThrottlingException",
+          "software.amazon.awssdk.services.sns.model.KmsAccessDeniedException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.services.sns.model.ValidationException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "publish",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Sends a message to an Amazon SNS topic, a text message (SMS message) directly to a phone number, or a message to a mobile platform endpoint (when you specify the TargetArn)."
+      },
+      {
+        "name": "publishBatch",
+        "parameters": [
+          {
+            "name": "publishBatchRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.PublishBatchRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The Amazon resource name (ARN) of the topic you want to batch publish to."
+              },
+              {
+                "name": "publishBatchRequestEntries",
+                "typeName": "List",
+                "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.PublishBatchRequestEntry>",
+                "isRequired": true,
+                "memberReference": "software.amazon.awssdk.services.sns.model.PublishBatchRequestEntry",
+                "description": "A list of PublishBatch request entries to be sent to the SNS topic."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.PublishBatchResponse",
+        "returnFields": [
+          {
+            "name": "successful",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.PublishBatchResultEntry>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.PublishBatchResultEntry",
+            "description": "A list of successful PublishBatch responses."
+          },
+          {
+            "name": "failed",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.BatchResultErrorEntry>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.BatchResultErrorEntry",
+            "description": "A list of failed PublishBatch responses."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterValueException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.EndpointDisabledException",
+          "software.amazon.awssdk.services.sns.model.PlatformApplicationDisabledException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.BatchEntryIdsNotDistinctException",
+          "software.amazon.awssdk.services.sns.model.BatchRequestTooLongException",
+          "software.amazon.awssdk.services.sns.model.EmptyBatchRequestException",
+          "software.amazon.awssdk.services.sns.model.InvalidBatchEntryIdException",
+          "software.amazon.awssdk.services.sns.model.TooManyEntriesInBatchRequestException",
+          "software.amazon.awssdk.services.sns.model.KmsDisabledException",
+          "software.amazon.awssdk.services.sns.model.KmsInvalidStateException",
+          "software.amazon.awssdk.services.sns.model.KmsNotFoundException",
+          "software.amazon.awssdk.services.sns.model.KmsOptInRequiredException",
+          "software.amazon.awssdk.services.sns.model.KmsThrottlingException",
+          "software.amazon.awssdk.services.sns.model.KmsAccessDeniedException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.services.sns.model.ValidationException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "publishBatch",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Publishes up to 10 messages to the specified topic in a single batch."
+      },
+      {
+        "name": "subscribe",
+        "parameters": [
+          {
+            "name": "subscribeRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.SubscribeRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic you want to subscribe to."
+              },
+              {
+                "name": "protocol",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The protocol that you want to use."
+              },
+              {
+                "name": "endpoint",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "The endpoint that you want to receive notifications."
+              },
+              {
+                "name": "attributes",
+                "typeName": "Map",
+                "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+                "isRequired": false,
+                "description": "A map of attributes with their corresponding values."
+              },
+              {
+                "name": "returnSubscriptionArn",
+                "typeName": "Boolean",
+                "fullType": "java.lang.Boolean",
+                "isRequired": false,
+                "description": "Sets whether the response from the Subscribe request includes the subscription ARN, even if the subscription is not yet confirmed."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.SubscribeResponse",
+        "returnFields": [
+          {
+            "name": "subscriptionArn",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "The ARN of the subscription if it is confirmed, or the string \"pending confirmation\" if the subscription requires confirmation."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.SubscriptionLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.FilterPolicyLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.ReplayLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "subscribe",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Subscribes an endpoint to an Amazon SNS topic."
+      },
+      {
+        "name": "unsubscribe",
+        "parameters": [
+          {
+            "name": "unsubscribeRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.UnsubscribeRequest",
+            "requestFields": [
+              {
+                "name": "subscriptionArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the subscription to be deleted."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.UnsubscribeResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "unsubscribe",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Deletes a subscription."
+      },
+      {
+        "name": "confirmSubscription",
+        "parameters": [
+          {
+            "name": "confirmSubscriptionRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.ConfirmSubscriptionRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic for which you wish to confirm a subscription."
+              },
+              {
+                "name": "token",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "Short-lived token sent to an endpoint during the Subscribe action."
+              },
+              {
+                "name": "authenticateOnUnsubscribe",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "Disallows unauthenticated unsubscribes of the subscription."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.ConfirmSubscriptionResponse",
+        "returnFields": [
+          {
+            "name": "subscriptionArn",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "The ARN of the created subscription."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.SubscriptionLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.FilterPolicyLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.ReplayLimitExceededException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "confirmSubscription",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Verifies an endpoint owner's intent to receive messages by validating the token sent to the endpoint by an earlier Subscribe action."
+      },
+      {
+        "name": "createTopic",
+        "parameters": [
+          {
+            "name": "createTopicRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.CreateTopicRequest",
+            "requestFields": [
+              {
+                "name": "name",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The name of the topic you want to create."
+              },
+              {
+                "name": "attributes",
+                "typeName": "Map",
+                "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+                "isRequired": false,
+                "description": "A map of attributes with their corresponding values."
+              },
+              {
+                "name": "tags",
+                "typeName": "List",
+                "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.Tag>",
+                "isRequired": false,
+                "memberReference": "software.amazon.awssdk.services.sns.model.Tag",
+                "description": "The list of tags to add to a new topic."
+              },
+              {
+                "name": "dataProtectionPolicy",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "The body of the policy document you want to use for this topic."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.CreateTopicResponse",
+        "returnFields": [
+          {
+            "name": "topicArn",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "The Amazon Resource Name (ARN) assigned to the created topic."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.TopicLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.services.sns.model.TagLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.StaleTagException",
+          "software.amazon.awssdk.services.sns.model.TagPolicyException",
+          "software.amazon.awssdk.services.sns.model.ConcurrentAccessException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "createTopic",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Creates a topic to which notifications can be published."
+      },
+      {
+        "name": "deleteTopic",
+        "parameters": [
+          {
+            "name": "deleteTopicRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.DeleteTopicRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic you want to delete."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.DeleteTopicResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InvalidStateException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.StaleTagException",
+          "software.amazon.awssdk.services.sns.model.TagPolicyException",
+          "software.amazon.awssdk.services.sns.model.ConcurrentAccessException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "deleteTopic",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Deletes a topic and all its subscriptions."
+      },
+      {
+        "name": "getTopicAttributes",
+        "parameters": [
+          {
+            "name": "getTopicAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.GetTopicAttributesRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic whose properties you want to get."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.GetTopicAttributesResponse",
+        "returnFields": [
+          {
+            "name": "attributes",
+            "typeName": "Map",
+            "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+            "isRequired": false,
+            "description": "A map of the topic's attributes."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "getTopicAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns all of the properties of a topic."
+      },
+      {
+        "name": "setTopicAttributes",
+        "parameters": [
+          {
+            "name": "setTopicAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.SetTopicAttributesRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic to modify."
+              },
+              {
+                "name": "attributeName",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "A map of attributes with their corresponding values."
+              },
+              {
+                "name": "attributeValue",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "The new value for the attribute."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.SetTopicAttributesResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "setTopicAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Allows a topic owner to set an attribute of the topic to a new value."
+      },
+      {
+        "name": "listTopics",
+        "parameters": [],
+        "returnType": "software.amazon.awssdk.services.sns.model.ListTopicsResponse",
+        "returnFields": [
+          {
+            "name": "topics",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.Topic>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.Topic",
+            "description": "A list of topic ARNs."
+          },
+          {
+            "name": "nextToken",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "Token to pass along to the next ListTopics request."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listTopics",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns a list of the requester's topics."
+      },
+      {
+        "name": "createPlatformApplication",
+        "parameters": [
+          {
+            "name": "createPlatformApplicationRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.CreatePlatformApplicationRequest",
+            "requestFields": [
+              {
+                "name": "name",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "Application names must be made up of only uppercase and lowercase ASCII letters, numbers, underscores, hyphens, and periods, and must be between 1 and 256 characters long."
+              },
+              {
+                "name": "platform",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The following platforms are supported: ADM (Amazon Device Messaging), APNS (Apple Push Notification Service), APNS_SANDBOX, and GCM (Firebase Cloud Messaging)."
+              },
+              {
+                "name": "attributes",
+                "typeName": "Map",
+                "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+                "isRequired": true,
+                "description": "For a list of attributes, see SetPlatformApplicationAttributes ."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.CreatePlatformApplicationResponse",
+        "returnFields": [
+          {
+            "name": "platformApplicationArn",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "PlatformApplicationArn is returned."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "createPlatformApplication",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Creates a platform application object for one of the supported push notification services, such as APNS and GCM (Firebase Cloud Messaging), to which devices and mobile apps may register."
+      },
+      {
+        "name": "deletePlatformApplication",
+        "parameters": [
+          {
+            "name": "deletePlatformApplicationRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.DeletePlatformApplicationRequest",
+            "requestFields": [
+              {
+                "name": "platformApplicationArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "PlatformApplicationArn of platform application object to delete."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.DeletePlatformApplicationResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "deletePlatformApplication",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Deletes a platform application object for one of the supported push notification services, such as APNS and GCM (Firebase Cloud Messaging)."
+      },
+      {
+        "name": "getPlatformApplicationAttributes",
+        "parameters": [
+          {
+            "name": "getPlatformApplicationAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.GetPlatformApplicationAttributesRequest",
+            "requestFields": [
+              {
+                "name": "platformApplicationArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "PlatformApplicationArn for GetPlatformApplicationAttributesInput."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.GetPlatformApplicationAttributesResponse",
+        "returnFields": [
+          {
+            "name": "attributes",
+            "typeName": "Map",
+            "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+            "isRequired": false,
+            "description": "Attributes include the following:"
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "getPlatformApplicationAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Retrieves the attributes of the platform application object for the supported push notification services, such as APNS and GCM (Firebase Cloud Messaging)."
+      },
+      {
+        "name": "setPlatformApplicationAttributes",
+        "parameters": [
+          {
+            "name": "setPlatformApplicationAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.SetPlatformApplicationAttributesRequest",
+            "requestFields": [
+              {
+                "name": "platformApplicationArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "PlatformApplicationArn for SetPlatformApplicationAttributes action."
+              },
+              {
+                "name": "attributes",
+                "typeName": "Map",
+                "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+                "isRequired": true,
+                "description": "A map of the platform application attributes."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.SetPlatformApplicationAttributesResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "setPlatformApplicationAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Sets the attributes of the platform application object for the supported push notification services, such as APNS and GCM (Firebase Cloud Messaging)."
+      },
+      {
+        "name": "createPlatformEndpoint",
+        "parameters": [
+          {
+            "name": "createPlatformEndpointRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.CreatePlatformEndpointRequest",
+            "requestFields": [
+              {
+                "name": "platformApplicationArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "PlatformApplicationArn returned from CreatePlatformApplication is used to create a an endpoint."
+              },
+              {
+                "name": "token",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "Unique identifier created by the notification service for an app on a device."
+              },
+              {
+                "name": "customUserData",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "Arbitrary user data to associate with the endpoint."
+              },
+              {
+                "name": "attributes",
+                "typeName": "Map",
+                "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+                "isRequired": false,
+                "description": "For a list of attributes, see SetEndpointAttributes ."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.CreatePlatformEndpointResponse",
+        "returnFields": [
+          {
+            "name": "endpointArn",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "EndpointArn returned from CreateEndpoint action."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "createPlatformEndpoint",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Creates an endpoint for a device and mobile app on one of the supported push notification services, such as GCM (Firebase Cloud Messaging) and APNS."
+      },
+      {
+        "name": "deleteEndpoint",
+        "parameters": [
+          {
+            "name": "deleteEndpointRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.DeleteEndpointRequest",
+            "requestFields": [
+              {
+                "name": "endpointArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "EndpointArn of endpoint to delete."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.DeleteEndpointResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "deleteEndpoint",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Deletes the endpoint for a device and mobile app from Amazon SNS."
+      },
+      {
+        "name": "getEndpointAttributes",
+        "parameters": [
+          {
+            "name": "getEndpointAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.GetEndpointAttributesRequest",
+            "requestFields": [
+              {
+                "name": "endpointArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "EndpointArn for GetEndpointAttributes input."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.GetEndpointAttributesResponse",
+        "returnFields": [
+          {
+            "name": "attributes",
+            "typeName": "Map",
+            "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+            "isRequired": false,
+            "description": "Attributes include the following:"
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "getEndpointAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Retrieves the endpoint attributes for a device on one of the supported push notification services, such as GCM (Firebase Cloud Messaging) and APNS."
+      },
+      {
+        "name": "setEndpointAttributes",
+        "parameters": [
+          {
+            "name": "setEndpointAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.SetEndpointAttributesRequest",
+            "requestFields": [
+              {
+                "name": "endpointArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "EndpointArn used for SetEndpointAttributes action."
+              },
+              {
+                "name": "attributes",
+                "typeName": "Map",
+                "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+                "isRequired": true,
+                "description": "A map of the endpoint attributes."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.SetEndpointAttributesResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "setEndpointAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Sets the attributes for an endpoint for a device on one of the supported push notification services, such as GCM (Firebase Cloud Messaging) and APNS."
+      },
+      {
+        "name": "listEndpointsByPlatformApplication",
+        "parameters": [
+          {
+            "name": "listEndpointsByPlatformApplicationRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.ListEndpointsByPlatformApplicationRequest",
+            "requestFields": [
+              {
+                "name": "platformApplicationArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "PlatformApplicationArn for ListEndpointsByPlatformApplicationInput action."
+              },
+              {
+                "name": "nextToken",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "NextToken string is used when calling ListEndpointsByPlatformApplication action to retrieve additional records that are available after the first page results."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.ListEndpointsByPlatformApplicationResponse",
+        "returnFields": [
+          {
+            "name": "endpoints",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.Endpoint>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.Endpoint",
+            "description": "Endpoints returned for ListEndpointsByPlatformApplication action."
+          },
+          {
+            "name": "nextToken",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "NextToken string is returned when calling ListEndpointsByPlatformApplication action if additional records are available after the first page results."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listEndpointsByPlatformApplication",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Lists the endpoints and endpoint attributes for devices in a supported push notification service, such as GCM (Firebase Cloud Messaging) and APNS."
+      },
+      {
+        "name": "listSubscriptions",
+        "parameters": [],
+        "returnType": "software.amazon.awssdk.services.sns.model.ListSubscriptionsResponse",
+        "returnFields": [
+          {
+            "name": "subscriptions",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.Subscription>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.Subscription",
+            "description": "A list of subscriptions."
+          },
+          {
+            "name": "nextToken",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "Token to pass along to the next ListSubscriptions request."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listSubscriptions",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns a list of the requester's subscriptions."
+      },
+      {
+        "name": "listSubscriptionsByTopic",
+        "parameters": [
+          {
+            "name": "listSubscriptionsByTopicRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.ListSubscriptionsByTopicRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic for which you wish to find subscriptions."
+              },
+              {
+                "name": "nextToken",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "Token returned by the previous ListSubscriptionsByTopic request."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.ListSubscriptionsByTopicResponse",
+        "returnFields": [
+          {
+            "name": "subscriptions",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.Subscription>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.Subscription",
+            "description": "A list of subscriptions."
+          },
+          {
+            "name": "nextToken",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "Token to pass along to the next ListSubscriptionsByTopic request."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listSubscriptionsByTopic",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns a list of the subscriptions to a specific topic."
+      },
+      {
+        "name": "getSubscriptionAttributes",
+        "parameters": [
+          {
+            "name": "getSubscriptionAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.GetSubscriptionAttributesRequest",
+            "requestFields": [
+              {
+                "name": "subscriptionArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the subscription whose properties you want to get."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.GetSubscriptionAttributesResponse",
+        "returnFields": [
+          {
+            "name": "attributes",
+            "typeName": "Map",
+            "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+            "isRequired": false,
+            "description": "A map of the subscription's attributes."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "getSubscriptionAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns all of the properties of a subscription."
+      },
+      {
+        "name": "setSubscriptionAttributes",
+        "parameters": [
+          {
+            "name": "setSubscriptionAttributesRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.SetSubscriptionAttributesRequest",
+            "requestFields": [
+              {
+                "name": "subscriptionArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the subscription to modify."
+              },
+              {
+                "name": "attributeName",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "A map of attributes with their corresponding values."
+              },
+              {
+                "name": "attributeValue",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": false,
+                "description": "The new value for the attribute in JSON format."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.SetSubscriptionAttributesResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.FilterPolicyLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.ReplayLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "setSubscriptionAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Allows a subscription owner to set an attribute of the subscription to a new value."
+      },
+      {
+        "name": "addPermission",
+        "parameters": [
+          {
+            "name": "addPermissionRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.AddPermissionRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic whose access control policy you wish to modify."
+              },
+              {
+                "name": "label",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "A unique identifier for the new policy statement."
+              },
+              {
+                "name": "awsAccountIds",
+                "typeName": "List",
+                "fullType": "java.util.List<java.lang.String>",
+                "isRequired": true,
+                "description": "The Amazon Web Services account IDs of the users (principals) who will be given access to the specified actions."
+              },
+              {
+                "name": "actionNames",
+                "typeName": "List",
+                "fullType": "java.util.List<java.lang.String>",
+                "isRequired": true,
+                "description": "The action you want to allow for the specified principal(s)."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.AddPermissionResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "addPermission",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Adds a statement to a topic's access control policy, granting access for the specified Amazon Web Services accounts to the specified actions."
+      },
+      {
+        "name": "removePermission",
+        "parameters": [
+          {
+            "name": "removePermissionRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.RemovePermissionRequest",
+            "requestFields": [
+              {
+                "name": "topicArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic whose access control policy you wish to modify."
+              },
+              {
+                "name": "label",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The unique label of the statement you want to remove."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.RemovePermissionResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "removePermission",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Removes a statement from a topic's access control policy."
+      },
+      {
+        "name": "getSMSAttributes",
+        "parameters": [],
+        "returnType": "software.amazon.awssdk.services.sns.model.GetSmsAttributesResponse",
+        "returnFields": [
+          {
+            "name": "attributes",
+            "typeName": "Map",
+            "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+            "isRequired": false,
+            "description": "The SMS attribute names and their values."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.ThrottledException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "getSMSAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns the settings for sending SMS messages from your Amazon Web Services account."
+      },
+      {
+        "name": "setSMSAttributes",
+        "parameters": [
+          {
+            "name": "consumer",
+            "typeName": "java.util.function.Consumer",
+            "requestFields": []
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.SetSmsAttributesResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.ThrottledException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "setSMSAttributes",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Use this request to set the default settings for sending SMS messages and receiving daily SMS usage reports."
+      },
+      {
+        "name": "checkIfPhoneNumberIsOptedOut",
+        "parameters": [
+          {
+            "name": "checkIfPhoneNumberIsOptedOutRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.CheckIfPhoneNumberIsOptedOutRequest",
+            "requestFields": [
+              {
+                "name": "phoneNumber",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The phone number for which you want to check the opt out status."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.CheckIfPhoneNumberIsOptedOutResponse",
+        "returnFields": [
+          {
+            "name": "isOptedOut",
+            "typeName": "Boolean",
+            "fullType": "java.lang.Boolean",
+            "isRequired": false,
+            "description": "Indicates whether the phone number is opted out:"
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.ThrottledException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "checkIfPhoneNumberIsOptedOut",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Accepts a phone number and indicates whether the phone holder has opted out of receiving SMS messages from your Amazon Web Services account."
+      },
+      {
+        "name": "listPhoneNumbersOptedOut",
+        "parameters": [],
+        "returnType": "software.amazon.awssdk.services.sns.model.ListPhoneNumbersOptedOutResponse",
+        "returnFields": [
+          {
+            "name": "phoneNumbers",
+            "typeName": "List",
+            "fullType": "java.util.List<java.lang.String>",
+            "isRequired": false,
+            "description": "A list of phone numbers that are opted out of receiving SMS messages."
+          },
+          {
+            "name": "nextToken",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "A NextToken string is returned when you call the ListPhoneNumbersOptedOut action if additional records are available after the first page of results."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.ThrottledException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listPhoneNumbersOptedOut",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Returns a list of phone numbers that are opted out, meaning you cannot send SMS messages to them."
+      },
+      {
+        "name": "optInPhoneNumber",
+        "parameters": [
+          {
+            "name": "optInPhoneNumberRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.OptInPhoneNumberRequest",
+            "requestFields": [
+              {
+                "name": "phoneNumber",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The phone number to opt in."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.OptInPhoneNumberResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.ThrottledException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "optInPhoneNumber",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Use this request to opt in a phone number that is opted out, which enables you to resume sending SMS messages to the number."
+      },
+      {
+        "name": "listPlatformApplications",
+        "parameters": [],
+        "returnType": "software.amazon.awssdk.services.sns.model.ListPlatformApplicationsResponse",
+        "returnFields": [
+          {
+            "name": "platformApplications",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.PlatformApplication>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.PlatformApplication",
+            "description": "Platform applications returned when calling ListPlatformApplications action."
+          },
+          {
+            "name": "nextToken",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "NextToken string is returned when calling ListPlatformApplications action if additional records are available after the first page results."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listPlatformApplications",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Lists the platform application objects for the supported push notification services, such as APNS and GCM (Firebase Cloud Messaging)."
+      },
+      {
+        "name": "tagResource",
+        "parameters": [
+          {
+            "name": "tagResourceRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.TagResourceRequest",
+            "requestFields": [
+              {
+                "name": "resourceArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic to which to add tags."
+              },
+              {
+                "name": "tags",
+                "typeName": "List",
+                "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.Tag>",
+                "isRequired": true,
+                "memberReference": "software.amazon.awssdk.services.sns.model.Tag",
+                "description": "The tags to be added to the specified topic."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.TagResourceResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.ResourceNotFoundException",
+          "software.amazon.awssdk.services.sns.model.TagLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.StaleTagException",
+          "software.amazon.awssdk.services.sns.model.TagPolicyException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.ConcurrentAccessException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "tagResource",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Add tags to the specified Amazon SNS topic."
+      },
+      {
+        "name": "untagResource",
+        "parameters": [
+          {
+            "name": "untagResourceRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.UntagResourceRequest",
+            "requestFields": [
+              {
+                "name": "resourceArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic from which to remove tags."
+              },
+              {
+                "name": "tagKeys",
+                "typeName": "List",
+                "fullType": "java.util.List<java.lang.String>",
+                "isRequired": true,
+                "description": "The list of tag keys to remove from the specified topic."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.UntagResourceResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.ResourceNotFoundException",
+          "software.amazon.awssdk.services.sns.model.TagLimitExceededException",
+          "software.amazon.awssdk.services.sns.model.StaleTagException",
+          "software.amazon.awssdk.services.sns.model.TagPolicyException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.ConcurrentAccessException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "untagResource",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Remove tags from the specified Amazon SNS topic."
+      },
+      {
+        "name": "listTagsForResource",
+        "parameters": [
+          {
+            "name": "listTagsForResourceRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.ListTagsForResourceRequest",
+            "requestFields": [
+              {
+                "name": "resourceArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic for which to list tags."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.ListTagsForResourceResponse",
+        "returnFields": [
+          {
+            "name": "tags",
+            "typeName": "List",
+            "fullType": "java.util.List<software.amazon.awssdk.services.sns.model.Tag>",
+            "isRequired": false,
+            "memberReference": "software.amazon.awssdk.services.sns.model.Tag",
+            "description": "The tags associated with the specified topic."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.ResourceNotFoundException",
+          "software.amazon.awssdk.services.sns.model.TagPolicyException",
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.ConcurrentAccessException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "listTagsForResource",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "List all tags added to the specified Amazon SNS topic."
+      },
+      {
+        "name": "putDataProtectionPolicy",
+        "parameters": [
+          {
+            "name": "putDataProtectionPolicyRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.PutDataProtectionPolicyRequest",
+            "requestFields": [
+              {
+                "name": "resourceArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic whose DataProtectionPolicy you want to add or update."
+              },
+              {
+                "name": "dataProtectionPolicy",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The JSON serialization of the topic's DataProtectionPolicy."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.PutDataProtectionPolicyResponse",
+        "returnFields": [],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "putDataProtectionPolicy",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Adds or updates an inline policy document that is stored in the specified Amazon SNS topic."
+      },
+      {
+        "name": "getDataProtectionPolicy",
+        "parameters": [
+          {
+            "name": "getDataProtectionPolicyRequest",
+            "typeName": "software.amazon.awssdk.services.sns.model.GetDataProtectionPolicyRequest",
+            "requestFields": [
+              {
+                "name": "resourceArn",
+                "typeName": "String",
+                "fullType": "java.lang.String",
+                "isRequired": true,
+                "description": "The ARN of the topic whose DataProtectionPolicy you want to get."
+              }
+            ]
+          }
+        ],
+        "returnType": "software.amazon.awssdk.services.sns.model.GetDataProtectionPolicyResponse",
+        "returnFields": [
+          {
+            "name": "dataProtectionPolicy",
+            "typeName": "String",
+            "fullType": "java.lang.String",
+            "isRequired": false,
+            "description": "Retrieves the DataProtectionPolicy in JSON string format."
+          }
+        ],
+        "exceptions": [
+          "software.amazon.awssdk.services.sns.model.InvalidParameterException",
+          "software.amazon.awssdk.services.sns.model.InternalErrorException",
+          "software.amazon.awssdk.services.sns.model.NotFoundException",
+          "software.amazon.awssdk.services.sns.model.AuthorizationErrorException",
+          "software.amazon.awssdk.services.sns.model.InvalidSecurityException",
+          "software.amazon.awssdk.awscore.exception.AwsServiceException",
+          "software.amazon.awssdk.core.exception.SdkClientException",
+          "software.amazon.awssdk.services.sns.model.SnsException"
+        ],
+        "isStatic": false,
+        "isFinal": false,
+        "isAbstract": false,
+        "signature": "getDataProtectionPolicy",
+        "isDeprecated": false,
+        "typeParameters": [],
+        "annotations": [],
+        "description": "Retrieves the specified inline DataProtectionPolicy document that is stored in the specified Amazon SNS topic."
+      }
+    ]
+  },
+  "memberClasses": {
+    "software.amazon.awssdk.services.sns.model.MessageAttributeValue": {
+      "simpleName": "MessageAttributeValue",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "dataType",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "Amazon SNS supports the following logical data types: String, String.Array, Number, and Binary."
+        },
+        {
+          "name": "stringValue",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "Strings are Unicode with UTF8 binary encoding."
+        },
+        {
+          "name": "binaryValue",
+          "typeName": "SdkBytes",
+          "fullType": "software.amazon.awssdk.core.SdkBytes",
+          "isRequired": false,
+          "description": "Binary type attributes can store any binary data, for example, compressed data, encrypted data, or images."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.PublishBatchRequestEntry": {
+      "simpleName": "PublishBatchRequestEntry",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "id",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "An identifier for the message in this batch."
+        },
+        {
+          "name": "message",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The body of the message."
+        },
+        {
+          "name": "subject",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The subject of the batch message."
+        },
+        {
+          "name": "messageStructure",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "Set MessageStructure to json if you want to send a different message for each protocol."
+        },
+        {
+          "name": "messageAttributes",
+          "typeName": "Map",
+          "fullType": "java.util.Map<java.lang.String, software.amazon.awssdk.services.sns.model.MessageAttributeValue>",
+          "isRequired": false,
+          "memberReference": "software.amazon.awssdk.services.sns.model.MessageAttributeValue",
+          "description": "Each message attribute consists of a Name, Type, and Value."
+        },
+        {
+          "name": "messageDeduplicationId",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "This parameter applies only to FIFO (first-in-first-out) topics."
+        },
+        {
+          "name": "messageGroupId",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "FIFO topics: The tag that specifies that a message belongs to a specific message group."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.PublishBatchResultEntry": {
+      "simpleName": "PublishBatchResultEntry",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "id",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The Id of an entry in a batch request."
+        },
+        {
+          "name": "messageId",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "An identifier for the message."
+        },
+        {
+          "name": "sequenceNumber",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "This parameter applies only to FIFO (first-in-first-out) topics."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.BatchResultErrorEntry": {
+      "simpleName": "BatchResultErrorEntry",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "id",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The Id of an entry in a batch request"
+        },
+        {
+          "name": "code",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "An error code representing why the action failed on this entry."
+        },
+        {
+          "name": "message",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "A message explaining why the action failed on this entry."
+        },
+        {
+          "name": "senderFault",
+          "typeName": "Boolean",
+          "fullType": "java.lang.Boolean",
+          "isRequired": false,
+          "description": "Specifies whether the error happened due to the caller of the batch API action."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.Tag": {
+      "simpleName": "Tag",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "key",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The required key portion of the tag."
+        },
+        {
+          "name": "value",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The optional value portion of the tag."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.Topic": {
+      "simpleName": "Topic",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "topicArn",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The topic's ARN."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.Endpoint": {
+      "simpleName": "Endpoint",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "endpointArn",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The EndpointArn for mobile app and device."
+        },
+        {
+          "name": "attributes",
+          "typeName": "Map",
+          "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+          "isRequired": false,
+          "memberReference": "java.lang.String",
+          "description": "Attributes for endpoint."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.Subscription": {
+      "simpleName": "Subscription",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "subscriptionArn",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The subscription's ARN."
+        },
+        {
+          "name": "owner",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The subscription's owner."
+        },
+        {
+          "name": "protocol",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The subscription's protocol."
+        },
+        {
+          "name": "endpoint",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The subscription's endpoint (format depends on the protocol)."
+        },
+        {
+          "name": "topicArn",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "The ARN of the subscription's topic."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.model.PlatformApplication": {
+      "simpleName": "PlatformApplication",
+      "packageName": "software.amazon.awssdk.services.sns.model",
+      "fields": [
+        {
+          "name": "platformApplicationArn",
+          "typeName": "String",
+          "fullType": "java.lang.String",
+          "isRequired": false,
+          "description": "PlatformApplicationArn for platform application object."
+        },
+        {
+          "name": "attributes",
+          "typeName": "Map",
+          "fullType": "java.util.Map<java.lang.String, java.lang.String>",
+          "isRequired": false,
+          "memberReference": "java.lang.String",
+          "description": "Attributes for platform application object."
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.endpoints.SnsEndpointProvider": {
+      "simpleName": "SnsEndpointProvider",
+      "packageName": "software.amazon.awssdk.services.sns.endpoints",
+      "fields": [
+        {
+          "name": "defaultProvider",
+          "typeName": "SnsEndpointProvider",
+          "fullType": "software.amazon.awssdk.services.sns.endpoints.SnsEndpointProvider",
+          "isRequired": false,
+          "memberReference": "software.amazon.awssdk.services.sns.endpoints.SnsEndpointProvider",
+          "description": null
+        }
+      ]
+    },
+    "software.amazon.awssdk.services.sns.auth.scheme.SnsAuthSchemeProvider": {
+      "simpleName": "SnsAuthSchemeProvider",
+      "packageName": "software.amazon.awssdk.services.sns.auth.scheme",
+      "fields": [
+        {
+          "name": "defaultProvider",
+          "typeName": "SnsAuthSchemeProvider",
+          "fullType": "software.amazon.awssdk.services.sns.auth.scheme.SnsAuthSchemeProvider",
+          "isRequired": false,
+          "memberReference": "software.amazon.awssdk.services.sns.auth.scheme.SnsAuthSchemeProvider",
+          "description": "Get the default auth scheme provider the preferred auth schemes in order of preference."
+        }
+      ]
+    }
+  },
+  "enums": {},
+  "analysis": {
+    "totalClassesFound": 260,
+    "totalMethodsInClient": 115,
+    "selectedMethods": 36,
+    "analysisApproach": "JavaParser with LLM enhancement"
+  }
+}
